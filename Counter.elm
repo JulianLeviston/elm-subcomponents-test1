@@ -1,21 +1,29 @@
 module Counter exposing (view, Model, init, intToModel, modelToInt, map)
+
 import Html exposing (Html)
 import Html.Attributes
 import Html.Events
 import Thunks
 
-type alias Model = Thunks.Thunk Int
+
+type alias Model =
+    Thunks.Thunk Int
+
 
 init : Model
-init = intToModel 0
+init =
+    intToModel 0
+
 
 initWith : Int -> Model
-initWith = intToModel
+initWith =
+    intToModel
+
 
 view : Model -> Html Model
 view model =
     Html.div
-        [ Html.Attributes.style [("border", "1px solid blue"), ("width", "100px"), ("padding", "2px")] ]
+        [ Html.Attributes.style [ ( "border", "1px solid blue" ), ( "width", "100px" ), ( "padding", "2px" ) ] ]
         [ Html.button
             [ Html.Events.onClick (mapSubtractOne model) ]
             [ Html.text "-" ]
@@ -27,17 +35,27 @@ view model =
             [ Html.text "+" ]
         ]
 
+
 mapAddOne : Model -> Model
-mapAddOne = map (\x -> x + 1)
+mapAddOne =
+    map (\x -> x + 1)
+
 
 mapSubtractOne : Model -> Model
-mapSubtractOne = map (\x -> x - 1)
+mapSubtractOne =
+    map (\x -> x - 1)
+
 
 intToModel : Int -> Model
-intToModel = Thunks.thunkify
+intToModel =
+    Thunks.thunkify
+
 
 map : (Int -> Int) -> Model -> Model
-map = Thunks.thunkMap
+map =
+    Thunks.thunkMap
+
 
 modelToInt : Model -> Int
-modelToInt valueThunkFunction = valueThunkFunction ()
+modelToInt valueThunkFunction =
+    valueThunkFunction ()
